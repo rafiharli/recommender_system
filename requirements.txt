@@ -1,3 +1,5 @@
 streamlit
+scikit-learn
 scikit-surprise
+surprise
 pandas
