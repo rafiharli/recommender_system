@@ -77,43 +77,53 @@ elif page == "Rekomendasi Film":
     st.title("🎯 Cari Rekomendasi Film")
     alpha = st.sidebar.slider("Nilai α (kontribusi SVD vs KNN)", 0.0, 1.0, 0.9, step=0.1)
     selected_title = st.selectbox("Ketik atau pilih judul film:", movies_df['title'].sort_values().unique())
-    selected_movie = movies_df[movies_df['title'] == selected_title].iloc[0]
-    selected_movie_id = int(selected_movie['movieId'])
+
+    # Tombol eksekusi
+    if 'show_recommendation' not in st.session_state:
+        st.session_state.show_recommendation = False
+
+    if st.button("Tampilkan Rekomendasi"):
+        st.session_state.show_recommendation = True
 
     top_n = st.number_input("Top-N rekomendasi", min_value=1, max_value=20, value=10, step=1)
 
-    try:
-        with st.spinner("🔎 Mencari film yang mirip..."):
-            inner_i = raw_id_to_inner_id[selected_movie_id]
-            sim_scores = []
+    if st.session_state.show_recommendation:
+        selected_movie = movies_df[movies_df['title'] == selected_title].iloc[0]
+        selected_movie_id = int(selected_movie['movieId'])
 
-            for j in range(svd_sim_matrix.shape[0]):
-                if j == inner_i:
-                    continue
-                sim_svd = svd_sim_matrix[inner_i][j]
-                sim_knn = knn_sim_matrix[inner_i][j]
-                sim = alpha * sim_svd + (1 - alpha) * sim_knn
-                sim_scores.append((j, sim))
+        try:
+            with st.spinner("🔎 Mencari film yang mirip..."):
+                inner_i = raw_id_to_inner_id[selected_movie_id]
+                sim_scores = []
 
-            sim_scores.sort(key=lambda x: x[1], reverse=True)
-            top_items = sim_scores[:top_n]
+                for j in range(svd_sim_matrix.shape[0]):
+                    if j == inner_i:
+                        continue
+                    sim_svd = svd_sim_matrix[inner_i][j]
+                    sim_knn = knn_sim_matrix[inner_i][j]
+                    sim = alpha * sim_svd + (1 - alpha) * sim_knn
+                    sim_scores.append((j, sim))
 
-            st.subheader(f'Top {top_n} Rekomendasi Film  "*{selected_title}*"')
-            cols = st.columns(min(5, top_n))
+                sim_scores.sort(key=lambda x: x[1], reverse=True)
+                top_items = sim_scores[:top_n]
 
-            for idx, (inner, score) in enumerate(top_items):
-                raw_id = int(inner_id_to_raw_id[inner])
-                movie = movies_df[movies_df['movieId'] == raw_id].iloc[0]
-                title = movie['title']
-                img_url = movie['img_link'] if pd.notna(movie['img_link']) else "https://via.placeholder.com/150?text=No+Image"
-                pred_rating = score * 4 + 1
-                rating_str = f"⭐ {pred_rating:.2f}/5"
+                st.subheader(f'Top {top_n} Rekomendasi Film "*{selected_title}*"')
+                cols = st.columns(min(5, top_n))
 
-                with cols[idx % len(cols)]:
-                    st.image(img_url, caption=f"{title}\n{rating_str}", use_container_width=True, width=15)
+                for idx, (inner, score) in enumerate(top_items):
+                    raw_id = int(inner_id_to_raw_id[inner])
+                    movie = movies_df[movies_df['movieId'] == raw_id].iloc[0]
+                    title = movie['title']
+                    img_url = movie['img_link'] if pd.notna(movie['img_link']) else "https://via.placeholder.com/150?text=No+Image"
+                    pred_rating = score * 4 + 1
+                    rating_str = f"⭐ {pred_rating:.2f}/5"
 
-    except Exception as e:
-        st.error(f"❌ Terjadi kesalahan saat mencari rekomendasi: {e}")
+                    with cols[idx % len(cols)]:
+                        st.image(img_url, caption=f"{title}\n\n{rating_str}", use_container_width=True)
+
+        except Exception as e:
+            st.error(f"❌ Terjadi kesalahan saat mencari rekomendasi: {e}")
+
 
 # Footer
 def render_footer():
