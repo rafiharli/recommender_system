@@ -156,17 +156,3 @@ elif page == "Rekomendasi Film":
         st.error(f"Terjadi kesalahan saat mencari rekomendasi: {e}")
 
 end_layout_with_footer()
-
-def render_footer():
-    st.markdown("---")
-    st.markdown(
-        """
-        <div style='text-align: center; font-size: 0.9rem; color: gray;'>
-            © 2025 <strong>Rafi Harlianto</strong>. All rights reserved.  
-            Built with ❤️ using <a href="https://streamlit.io" target="_blank">Streamlit</a>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-render_footer()
