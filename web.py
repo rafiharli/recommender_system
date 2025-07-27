@@ -49,6 +49,7 @@ movies_df = pd.merge(movies_df, images_df, on='movieId', how='left')
 available_movie_ids = set(raw_id_to_inner_id.keys())
 movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
 
+# Navigasi manual
 if 'page' not in st.session_state:
     st.session_state.page = "Halaman Awal"
 
@@ -61,7 +62,7 @@ if st.sidebar.button("🎯 Rekomendasi Film"):
 
 page = st.session_state.page
 
-# 🏠 Halaman Awal
+# Halaman Awal
 if page == "Halaman Awal":
     st.title("🎬 Sistem Rekomendasi Film")
     st.markdown("""
@@ -71,17 +72,27 @@ if page == "Halaman Awal":
     ⚖️ Dapat menyesuaikan Top-N jumlah rekomendasi.  
     🎥 Ditampilkan dengan poster film.
     """)
-    
-# 🎯 Halaman Rekomendasi
+
+# Halaman Rekomendasi
 elif page == "Rekomendasi Film":
     st.title("🎯 Cari Rekomendasi Film")
+
+    # Sidebar - alpha hanya di halaman rekomendasi
     alpha = st.sidebar.slider("Nilai α (kontribusi SVD vs KNN)", 0.0, 1.0, 0.9, step=0.1)
+
+    # Input film dan tombol eksekusi
     selected_title = st.selectbox("Ketik atau pilih judul film:", movies_df['title'].sort_values().unique())
 
-    # Tombol eksekusi
+    # Reset jika judul berubah
+    if "last_selected_title" not in st.session_state:
+        st.session_state.last_selected_title = selected_title
+    if selected_title != st.session_state.last_selected_title:
+        st.session_state.show_recommendation = False
+        st.session_state.last_selected_title = selected_title
+
+    # Tombol tampilkan
     if 'show_recommendation' not in st.session_state:
         st.session_state.show_recommendation = False
-
     if st.button("Tampilkan Rekomendasi"):
         st.session_state.show_recommendation = True
 
@@ -123,7 +134,6 @@ elif page == "Rekomendasi Film":
 
         except Exception as e:
             st.error(f"❌ Terjadi kesalahan saat mencari rekomendasi: {e}")
-
 
 # Footer
 def render_footer():
