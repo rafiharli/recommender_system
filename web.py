@@ -51,50 +51,6 @@ movies_df = pd.merge(movies_df, images_df, on='movieId', how='left')
 available_movie_ids = set(raw_id_to_inner_id.keys())
 movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
 
-def start_layout():
-    st.markdown("""
-        <style>
-        .fullscreen-wrapper {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .content-wrapper {
-            flex-grow: 1;
-        }
-
-        .custom-footer {
-            text-align: center;
-            font-size: 0.9rem;
-            padding: 10px 1rem;
-            color: gray;
-            border-top: 1px solid #ddd;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .custom-footer {
-                color: #aaa;
-                border-top: 1px solid #333;
-            }
-        }
-        </style>
-
-        <div class="fullscreen-wrapper">
-        <div class="content-wrapper">
-    """, unsafe_allow_html=True)
-
-def end_layout_with_footer():
-    st.markdown("""
-        </div> <!-- content-wrapper -->
-        <div class="custom-footer">
-            © 2025 <strong>Rafi Harlianto</strong>. All rights reserved.  
-            Built with ❤️ using <a href="https://streamlit.io" target="_blank">Streamlit</a>
-        </div>
-        </div> <!-- fullscreen-wrapper -->
-    """, unsafe_allow_html=True)
-
-
 # Sidebar navigasi
 page = st.sidebar.selectbox("Navigasi", ["Halaman Awal", "Rekomendasi Film"])
 
