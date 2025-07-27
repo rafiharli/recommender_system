@@ -4,6 +4,8 @@ import numpy as np
 import pickle
 import os
 import gdown
+from surprise import Dataset, Reader, SVD, KNNBasic
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Konfigurasi halaman
 st.set_page_config(page_title="Hybrid Movie Recommender", layout="wide")
