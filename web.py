@@ -8,21 +8,6 @@ import gdown
 # Konfigurasi halaman
 st.set_page_config(page_title="Movie Recommender System", layout="wide")
 
-# Tambahan CSS untuk styling
-st.markdown("""
-<style>
-.stImage > img {
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-hr {
-    border: none;
-    height: 1px;
-    background-color: #eee;
-}
-</style>
-""", unsafe_allow_html=True)
-
 # --- FUNGSI UNDUH GOOGLE DRIVE ---
 def download_from_gdrive(file_id, output):
     if not os.path.exists(output):
