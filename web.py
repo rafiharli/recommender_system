@@ -22,8 +22,8 @@ knn_sim_matrix_id = '1dSU0zz8874Kqzaq09WmjqmCTmOjVl7O_'
 svd_sim_matrix_id = '1kgS98CKMPo7bmS2Gans2BrxgY7LNoGyH'
 
 # Unduh jika belum ada
-download_from_gdrive(id_mappings, 'knn_model.pkl')
-download_from_gdrive(svd_model_id, 'knn_model.pkl')
+download_from_gdrive(id_mappings, 'id_mappings.pkl')
+download_from_gdrive(svd_model_id, 'svd_model.pkl')
 download_from_gdrive(knn_model_id, 'knn_model.pkl')
 download_from_gdrive(knn_sim_matrix_id, 'knn_sim_matrix.pkl')
 download_from_gdrive(svd_sim_matrix_id, 'svd_sim_matrix.pkl')
