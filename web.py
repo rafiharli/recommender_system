@@ -60,39 +60,45 @@ def render_footer():
         <style>
         .footer {
             position: fixed;
-            left: 0;
             bottom: 0;
-            width: 100%;
+            left: 0;
+            width: calc(100% - var(--sidebar-width, 0px));
+            margin-left: var(--sidebar-width, 0px);
+            background-color: var(--footer-bg, #f1f1f1);
+            color: var(--footer-color, #333);
             text-align: center;
             padding: 10px 0;
             font-size: 0.85rem;
             z-index: 100;
             border-top: 1px solid #ccc;
-        }
-
-        @media (prefers-color-scheme: light) {
-            .footer {
-                background-color: #f1f1f1;
-                color: #333;
-            }
-            .footer a {
-                color: #333;
-                text-decoration: none;
-            }
+            transition: all 0.3s ease;
         }
 
         @media (prefers-color-scheme: dark) {
             .footer {
                 background-color: #0e1117;
                 color: #aaa;
+                border-top: 1px solid #333;
             }
+
             .footer a {
                 color: #aaa;
-                text-decoration: none;
             }
         }
 
-        /* Tambahkan padding bawah ke konten utama agar tidak tertutup */
+        @media (prefers-color-scheme: light) {
+            .footer {
+                background-color: #f1f1f1;
+                color: #333;
+                border-top: 1px solid #ccc;
+            }
+
+            .footer a {
+                color: #333;
+            }
+        }
+
+        /* Tambahan padding agar konten tidak ketutupan */
         .main > div {
             padding-bottom: 60px;
         }
