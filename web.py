@@ -12,8 +12,8 @@ st.set_page_config(page_title="Movie Recommender System", layout="wide")
 st.markdown("""
 <style>
 .stImage > img {
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 hr {
     border: none;
