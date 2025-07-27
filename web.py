@@ -66,6 +66,7 @@ movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
 
 # Sidebar navigasi
 page = st.sidebar.selectbox("Navigasi", ["Halaman Awal", "Rekomendasi Film"])
+alpha = st.slider("Nilai α (kontribusi SVD vs KNN)", 0.0, 1.0, 0.8, step=0.05)
 
 # 🏠 Halaman Awal
 if page == "Halaman Awal":
@@ -77,7 +78,7 @@ if page == "Halaman Awal":
     ⚖️ Gunakan slider α untuk mengatur kontribusi model.  
     🎥 Ditampilkan dengan poster dan prediksi skor.
     """)
-
+    
 # 🎯 Halaman Rekomendasi
 elif page == "Rekomendasi Film":
     st.title("🎯 Cari Rekomendasi Film")
@@ -86,7 +87,6 @@ elif page == "Rekomendasi Film":
     selected_movie = movies_df[movies_df['title'] == selected_title].iloc[0]
     selected_movie_id = int(selected_movie['movieId'])
 
-    alpha = st.slider("Nilai α (kontribusi SVD vs KNN)", 0.0, 1.0, 0.8, step=0.05)
     top_n = st.number_input("Top-N rekomendasi", min_value=1, max_value=20, value=5, step=1)
 
     try:
