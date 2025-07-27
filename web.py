@@ -100,10 +100,8 @@ elif page == "Rekomendasi Film":
             movie = movies_df[movies_df['movieId'] == raw_id].iloc[0]
             title = movie['title']
             img_url = movie['img_link'] if pd.notna(movie['img_link']) else "https://via.placeholder.com/150"
-
             pred_rating = score * 4 + 1
             rating_str = f"{pred_rating:.3f}".replace(".", ",")
-
             with cols[idx % len(cols)]:
                 st.image(img_url, caption=f"{title}\n\nPrediksi Rating: {rating_str}", use_container_width=True)
 
