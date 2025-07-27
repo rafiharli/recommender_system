@@ -60,7 +60,7 @@ if page == "Halaman Awal":
     st.markdown("""
     Selamat datang di sistem rekomendasi film berbasis **Weighted Hybrid (SVD + KNN)**!
 
-    🔍 Rekomendasi Film dengan prediksi antar Film yang sesuai dengan Preferensi Pengguna.  
+    🔍 **Rekomendasi Film** dengan **Prediksi Film** yang sesuai dengan **Preferensi Pengguna**.  
     ⚖️ Dapat menyesuaikan Top-N jumlah rekomendasi.  
     🎥 Ditampilkan dengan poster film.
     """)
