@@ -56,7 +56,7 @@ st.sidebar.title("Navigasi")
 if st.sidebar.button("🏠 Halaman Awal"):
     st.session_state.page = "Halaman Awal"
 if st.sidebar.button("🎯 Rekomendasi Film"):
-    st.bubble()
+    st.bubbles()
     st.session_state.page = "Rekomendasi Film"
 
 page = st.session_state.page
