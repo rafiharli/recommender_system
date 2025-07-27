@@ -110,7 +110,7 @@ elif page == "Rekomendasi Film":
                 rating_str = f"⭐ {pred_rating:.2f}/5"
 
                 with cols[idx % len(cols)]:
-                    st.image(img_url, caption=f"{title}\n\n{rating_str}", use_container_width=True, width=15)
+                    st.image(img_url, caption=f"{title}\n{rating_str}", use_container_width=True, width=15)
 
     except Exception as e:
         st.error(f"❌ Terjadi kesalahan saat mencari rekomendasi: {e}")
