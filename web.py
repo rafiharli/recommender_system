@@ -66,7 +66,7 @@ movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
 
 # Sidebar navigasi
 page = st.sidebar.selectbox("Navigasi", ["Halaman Awal", "Rekomendasi Film"])
-alpha = st.slider("Nilai α (kontribusi SVD vs KNN)", 0.0, 1.0, 0.8, step=0.05)
+alpha = st.sidebar.slider("Nilai α (kontribusi SVD vs KNN)", 0.0, 1.0, 0.8, step=0.05)
 
 # 🏠 Halaman Awal
 if page == "Halaman Awal":
