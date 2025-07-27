@@ -6,7 +6,7 @@ import os
 import gdown
 
 # Konfigurasi halaman
-st.set_page_config(page_title="Hybrid Movie Recommender", layout="wide")
+st.set_page_config(page_title="Movie Recommender System", layout="wide")
 
 # --- FUNGSI UNDUH GOOGLE DRIVE ---
 def download_from_gdrive(file_id, output):
@@ -60,9 +60,9 @@ if page == "Halaman Awal":
     st.markdown("""
     Selamat datang di sistem rekomendasi film berbasis **Weighted Hybrid (SVD + KNN)**!
 
-    🔍 Rekomendasi berdasarkan kemiripan antar item (item-to-item recommendation).  
-    ⚖️ Sesuaikan Top-N jumlah rekomendasi.  
-    🎥 Ditampilkan dengan poster film (jika tersedia).
+    🔍 Rekomendasi Film dengan prediksi antar Film yang sesuai dengan Preferensi Pengguna.  
+    ⚖️ Dapat menyesuaikan Top-N jumlah rekomendasi.  
+    🎥 Ditampilkan dengan poster film.
     """)
 
 # 🎯 Halaman Rekomendasi
