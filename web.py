@@ -105,7 +105,7 @@ elif page == "Rekomendasi Film":
             sim_scores.sort(key=lambda x: x[1], reverse=True)
             top_items = sim_scores[:top_n]
 
-            st.subheader(f"Top {top_n}: *{selected_title}*")
+            st.subheader(f'Top {top_n} Rekomendasi Film  "*{selected_title}*"')
             cols = st.columns(min(5, top_n))
 
             for idx, (inner, score) in enumerate(top_items):
