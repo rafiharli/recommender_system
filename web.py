@@ -109,7 +109,6 @@ elif page == "Rekomendasi Film":
     except Exception as e:
         st.error(f"Terjadi kesalahan saat mencari rekomendasi: {e}")
 
-# --- Fixed Footer ---
 st.markdown(
     """
     <style>
@@ -118,20 +117,45 @@ st.markdown(
         left: 0;
         bottom: 0;
         width: 100%;
-        background-color: #f1f1f1;
-        color: #555;
         text-align: center;
         padding: 10px 0;
         font-size: 0.85rem;
-        border-top: 1px solid #ddd;
         z-index: 100;
+        border-top: 1px solid #ccc;
+        transition: all 0.3s ease;
+    }
+
+    /* Light theme */
+    @media (prefers-color-scheme: light) {
+        .footer {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        .footer a {
+            color: #333;
+            text-decoration: none;
+        }
+    }
+
+    /* Dark theme */
+    @media (prefers-color-scheme: dark) {
+        .footer {
+            background-color: #0e1117;
+            color: #aaa;
+        }
+        .footer a {
+            color: #aaa;
+            text-decoration: none;
+        }
     }
     </style>
 
     <div class="footer">
-        © 2025 <strong>Rafi Harlianto</strong>. All rights reserved. | Built with ❤️ using <a href="https://streamlit.io" target="_blank" style="color: #555; text-decoration: none;">Streamlit</a>
+        © 2025 <strong>Rafi Harlianto</strong>. All rights reserved.
+        | Built with ❤️ using <a href="https://streamlit.io" target="_blank">Streamlit</a>
     </div>
     """,
     unsafe_allow_html=True
 )
+
 
