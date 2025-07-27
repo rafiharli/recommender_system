@@ -51,9 +51,40 @@ movies_df = pd.merge(movies_df, images_df, on='movieId', how='left')
 available_movie_ids = set(raw_id_to_inner_id.keys())
 movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
 
+st.markdown("""
+    <style>
+    /* Buat layout utama menjadi flex column penuh tinggi layar */
+    .main {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* Konten utama fleksibel agar footer terdorong */
+    .main > div {
+        flex: 1 0 auto;
+    }
+
+    /* Footer biasa, responsif tema */
+    .custom-footer {
+        flex-shrink: 0;
+        text-align: center;
+        font-size: 0.9rem;
+        padding: 10px 0;
+        color: gray;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .custom-footer {
+            color: #aaa;
+        }
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
 # Sidebar navigasi
 page = st.sidebar.selectbox("Navigasi", ["Halaman Awal", "Rekomendasi Film"])
-
 
 # 🏠 Halaman Awal
 if page == "Halaman Awal":
