@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-import os
-import gdown
 
 # Konfigurasi halaman
 st.set_page_config(page_title="Movie Recommender System", layout="wide")
@@ -18,25 +16,25 @@ def download_from_gdrive(file_id, output):
 id_mappings = '1eqH1JUM8Thw4F1sYU9qJSdqb5oNNtstm'
 svd_model_id = '1qIs2bJttxOlk6TA4VNP-geeKAH21Y45t'
 knn_model_id = '1l2eRmLZpei09EDDbqMDUlJpdIJp0ukNb'
-knn_sim_matrix_id = '1VJ_cDKBcqyzhjc48oC3zBFebLfBgPSz0'
-svd_sim_matrix_id = '1ZbZRYoqYH1BWBPAjiAK1Jd6dpOR2ni87'
+knn_matrix_id = '1VJ_cDKBcqyzhjc48oC3zBFebLfBgPSz0'
+svd_matrix_id = '1ZbZRYoqYH1BWBPAjiAK1Jd6dpOR2ni87'
 
 # Unduh jika belum ada
 download_from_gdrive(id_mappings, 'id_mappings.pkl')
 download_from_gdrive(svd_model_id, 'svd_model.pkl')
 download_from_gdrive(knn_model_id, 'knn_model.pkl')
-download_from_gdrive(knn_sim_matrix_id, 'knn_sim_matrix.pkl')
-download_from_gdrive(svd_sim_matrix_id, 'svd_sim_matrix.pkl')
+download_from_gdrive(knn_matrix_id, 'knn_matrix.pkl')
+download_from_gdrive(svd_matrix_id, 'svd_matrix.pkl')
 
 # Load model dan data
 with open("svd_model.pkl", "rb") as f:
     svd = pickle.load(f)
 with open("knn_model.pkl", "rb") as f:
     knn = pickle.load(f)
-with open("svd_sim_matrix.pkl", "rb") as f:
-    svd_sim_matrix = pickle.load(f)
-with open("knn_sim_matrix.pkl", "rb") as f:
-    knn_sim_matrix = pickle.load(f)
+with open("svd_matrix.pkl", "rb") as f:
+    svd_matrix = pickle.load(f)
+with open("knn_matrix.pkl", "rb") as f:
+    knn_matrix = pickle.load(f)
 with open("id_mappings.pkl", "rb") as f:
     inner_id_to_raw_id, raw_id_to_inner_id = pickle.load(f)
 
@@ -85,18 +83,18 @@ elif page == "Rekomendasi Film":
     try:
         with st.spinner("🔎 Mencari film yang mirip..."):
             inner_i = raw_id_to_inner_id[selected_movie_id]
-            sim_scores = []
+            pred_scores = []
 
-            for j in range(svd_sim_matrix.shape[0]):
+            for j in range(svd_matrix.shape[0]):
                 if j == inner_i:
                     continue
-                sim_svd = svd_sim_matrix[inner_i][j]
-                sim_knn = knn_sim_matrix[inner_i][j]
-                sim = alpha * sim_svd + (1 - alpha) * sim_knn
-                sim_scores.append((j, sim))
+                pred_svd = svd_matrix[inner_i][j]
+                pred_knn = knn_matrix[inner_i][j]
+                pred_weighted = alpha * pred_svd + (1 - alpha) * pred_knn
+                pred_scores.append((j, pred_weighted))
 
-            sim_scores.sort(key=lambda x: x[1], reverse=True)
-            top_items = sim_scores[:top_n]
+            pred_scores.sort(key=lambda x: x[1], reverse=True)
+            top_items = pred_scores[:top_n]
 
             st.subheader(f'Top {top_n} Rekomendasi Film "*{selected_title}*"')
             cols = st.columns(min(5, top_n))
