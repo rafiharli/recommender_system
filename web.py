@@ -51,40 +51,54 @@ movies_df = pd.merge(movies_df, images_df, on='movieId', how='left')
 available_movie_ids = set(raw_id_to_inner_id.keys())
 movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
 
-st.markdown("""
-    <style>
-    /* Buat layout utama menjadi flex column penuh tinggi layar */
-    .main {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-
-    /* Konten utama fleksibel agar footer terdorong */
-    .main > div {
-        flex: 1 0 auto;
-    }
-
-    /* Footer biasa, responsif tema */
-    .custom-footer {
-        flex-shrink: 0;
-        text-align: center;
-        font-size: 0.9rem;
-        padding: 10px 0;
-        color: gray;
-    }
-
-    @media (prefers-color-scheme: dark) {
-        .custom-footer {
-            color: #aaa;
+def start_layout():
+    st.markdown("""
+        <style>
+        .fullscreen-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
-    }
-    </style>
-""", unsafe_allow_html=True)
+
+        .content-wrapper {
+            flex-grow: 1;
+        }
+
+        .custom-footer {
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 10px 1rem;
+            color: gray;
+            border-top: 1px solid #ddd;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .custom-footer {
+                color: #aaa;
+                border-top: 1px solid #333;
+            }
+        }
+        </style>
+
+        <div class="fullscreen-wrapper">
+        <div class="content-wrapper">
+    """, unsafe_allow_html=True)
+
+def end_layout_with_footer():
+    st.markdown("""
+        </div> <!-- content-wrapper -->
+        <div class="custom-footer">
+            © 2025 <strong>Rafi Harlianto</strong>. All rights reserved.  
+            Built with ❤️ using <a href="https://streamlit.io" target="_blank">Streamlit</a>
+        </div>
+        </div> <!-- fullscreen-wrapper -->
+    """, unsafe_allow_html=True)
 
 
 # Sidebar navigasi
 page = st.sidebar.selectbox("Navigasi", ["Halaman Awal", "Rekomendasi Film"])
+
+start_layout()
 
 # 🏠 Halaman Awal
 if page == "Halaman Awal":
@@ -131,13 +145,17 @@ elif page == "Rekomendasi Film":
             movie = movies_df[movies_df['movieId'] == raw_id].iloc[0]
             title = movie['title']
             img_url = movie['img_link'] if pd.notna(movie['img_link']) else "https://via.placeholder.com/150"
+
             pred_rating = score * 4 + 1
             rating_str = f"{pred_rating:.3f}".replace(".", ",")
+
             with cols[idx % len(cols)]:
                 st.image(img_url, caption=f"{title}\n\nPrediksi Rating: {rating_str}", use_container_width=True)
 
     except Exception as e:
         st.error(f"Terjadi kesalahan saat mencari rekomendasi: {e}")
+
+end_layout_with_footer()
 
 def render_footer():
     st.markdown("---")
