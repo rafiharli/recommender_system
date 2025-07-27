@@ -74,9 +74,9 @@ if page == "Halaman Awal":
     st.markdown("""
     Selamat datang di sistem rekomendasi film berbasis **Weighted Hybrid (SVD + KNN)**!
 
-    🔍 Rekomendasi film berdasarkan **kemiripan konten** dan **preferensi pengguna**.  
-    ⚖️ Gunakan slider α untuk mengatur kontribusi model.  
-    🎥 Ditampilkan dengan poster dan prediksi skor.
+    🔍 **Rekomendasi Film** dengan **Prediksi Film** yang sesuai dengan **Preferensi Pengguna**.  
+    ⚖️ Dapat menyesuaikan Top-N jumlah rekomendasi.  
+    🎥 Ditampilkan dengan poster film.
     """)
     
 # 🎯 Halaman Rekomendasi
@@ -105,7 +105,7 @@ elif page == "Rekomendasi Film":
             sim_scores.sort(key=lambda x: x[1], reverse=True)
             top_items = sim_scores[:top_n]
 
-            st.subheader(f"Top {top_n} film mirip dengan: *{selected_title}*")
+            st.subheader(f"Top {top_n}: *{selected_title}*")
             cols = st.columns(min(5, top_n))
 
             for idx, (inner, score) in enumerate(top_items):
