@@ -64,8 +64,8 @@ movies_df = pd.merge(movies_df, images_df, on='movieId', how='left')
 available_movie_ids = set(raw_id_to_inner_id.keys())
 movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
 
-# Sidebar navigasi
-page = st.sidebar.selectbox("Navigasi", ["Halaman Awal", "Rekomendasi Film"])
+# Sidebar navigasist.sidebar.title("Navigasi")
+page = st.sidebar.radio("Pilih Halaman", ["Halaman Awal", "Rekomendasi Film"])
 
 # 🏠 Halaman Awal
 if page == "Halaman Awal":
