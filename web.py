@@ -77,21 +77,11 @@ if page == "Halaman Awal":
 # Halaman Rekomendasi
 elif page == "Rekomendasi Film":
     st.title("🎯 Cari Rekomendasi Film")
-    alpha = st.sidebar.slider("Nilai α (kontribusi SVD vs KNN)", 0.0, 1.0, 0.9, step=0.1)
+    alpha = 0.9
     selected_title = st.selectbox("Ketik atau pilih judul film:", movies_df['title'])
     selected_movie = movies_df[movies_df['title'] == selected_title].iloc[0]
     selected_movie_id = int(selected_movie['movieId'])
-    raw_id = int(inner_id_to_raw_id[inner])
-                movie = movies_df[movies_df['movieId'] == raw_id].iloc[0]
-                title = movie['title']
-                img_url = movie['img_link'] if pd.notna(movie['img_link']) else "https://via.placeholder.com/150?text=No+Image"
-                pred_rating = score * 4 + 1
-                rating_str = f"⭐ {pred_rating:.2f}/5"
-
-                with cols[idx % len(cols)]:
-                    st.image(img_url, caption=f"{title}\n\n{rating_str}", use_container_width=True)
-    top_n = st.number_input("Top-N rekomendasi", min_value=1, max_value=20, value=10, step=1)
-
+   
     try:
         with st.spinner("🔎 Mencari film yang mirip..."):
             inner_i = raw_id_to_inner_id[selected_movie_id]
