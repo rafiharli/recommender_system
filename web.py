@@ -76,13 +76,10 @@ if page == "Halaman Awal":
 # Halaman Rekomendasi
 elif page == "Rekomendasi Film":
     st.title("🎯 Cari Rekomendasi Film")
-
-    # Sidebar - alpha hanya di halaman rekomendasi
     alpha = st.sidebar.slider("Nilai α (kontribusi SVD vs KNN)", 0.0, 1.0, 0.9, step=0.1)
-
-    # Input film dan tombol eksekusi
     selected_title = st.selectbox("Ketik atau pilih judul film:", movies_df['title'].sort_values().unique())
-
+    selected_movie = movies_df[movies_df['title'] == selected_title].iloc[0]
+    selected_movie_id = int(selected_movie['movieId'])
     top_n = st.number_input("Top-N rekomendasi", min_value=1, max_value=20, value=10, step=1)
 
     try:
