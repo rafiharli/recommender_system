@@ -108,3 +108,15 @@ elif page == "Rekomendasi Film":
 
     except Exception as e:
         st.error(f"Terjadi kesalahan saat mencari rekomendasi: {e}")
+
+# --- Footer ---
+st.markdown(
+    """
+    <hr style="margin-top: 3rem; margin-bottom: 1rem; border: none; border-top: 1px solid #DDD;" />
+
+    <div style="text-align: center; color: gray; font-size: 0.9rem;">
+        © 2025 <strong>Rafi Harlianto</strong>. All rights reserved. | Built with ❤️ using <a href="https://streamlit.io" style="color: gray; text-decoration: none;" target="_blank">Streamlit</a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
