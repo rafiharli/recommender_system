@@ -64,8 +64,17 @@ movies_df = pd.merge(movies_df, images_df, on='movieId', how='left')
 available_movie_ids = set(raw_id_to_inner_id.keys())
 movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
 
-# Sidebar navigasist.sidebar.title("Navigasi")
-page = st.sidebar.radio("Pilih Halaman", ["Halaman Awal", "Rekomendasi Film"])
+if 'page' not in st.session_state:
+    st.session_state.page = "Halaman Awal"
+
+st.sidebar.title("Navigasi")
+if st.sidebar.button("🏠 Halaman Awal"):
+    st.session_state.page = "Halaman Awal"
+if st.sidebar.button("🎯 Rekomendasi Film"):
+    st.session_state.page = "Rekomendasi Film"
+
+page = st.session_state.page
+
 
 # 🏠 Halaman Awal
 if page == "Halaman Awal":
