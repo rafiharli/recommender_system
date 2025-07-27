@@ -15,9 +15,9 @@ def download_from_gdrive(file_id, output):
         gdown.download(url, output, quiet=False)
 
 # --- FILE ID DARI GOOGLE DRIVE ---
-knn_model_id = 'ISI_FILE_ID_KNN_MODEL'
-svd_sim_matrix_id = 'ISI_FILE_ID_SVD_SIM_MATRIX'
-knn_sim_matrix_id = 'ISI_FILE_ID_KNN_SIM_MATRIX'
+knn_model_id = 'https://drive.google.com/file/d/1J_GkdoyKh30JLsCnHgM9r9Zdd9J5lSFv/view?usp=drive_link'
+knn_sim_matrix_id = 'https://drive.google.com/file/d/1Fjr_pCFcgRUF4XZDZnQLL6_B-dDw7fXX/view?usp=drive_link'
+svd_sim_matrix_id = 'https://drive.google.com/file/d/1RpcyDaSJVYusIu9mGn-gcqU5rwgYIT-w/view?usp=drive_link'
 
 # --- DOWNLOAD FILE JIKA BELUM ADA ---
 download_from_gdrive(knn_model_id, 'knn_model.pkl')
