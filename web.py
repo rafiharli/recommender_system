@@ -15,14 +15,14 @@ def download_from_gdrive(file_id, output):
         gdown.download(url, output, quiet=False)
 
 # --- FILE ID DARI GOOGLE DRIVE ---
-knn_model_id = 'https://drive.google.com/uc?id=1J_GkdoyKh30JLsCnHgM9r9Zdd9J5lSFv'
-knn_sim_matrix_id = 'https://drive.google.com/uc?id=1Fjr_pCFcgRUF4XZDZnQLL6_B-dDw7fXX'
-svd_sim_matrix_id = 'https://drive.google.com/uc?id=1RpcyDaSJVYusIu9mGn-gcqU5rwgYIT-w'
+knn_model_id = '1J_GkdoyKh30JLsCnHgM9r9Zdd9J5lSFv'
+knn_sim_matrix_id = '1Fjr_pCFcgRUF4XZDZnQLL6_B-dDw7fXX'
+svd_sim_matrix_id = '1RpcyDaSJVYusIu9mGn-gcqU5rwgYIT-w'
 
-# --- DOWNLOAD FILE JIKA BELUM ADA ---
+# Unduh jika belum ada
 download_from_gdrive(knn_model_id, 'knn_model.pkl')
-download_from_gdrive(svd_sim_matrix_id, 'svd_sim_matrix.pkl')
 download_from_gdrive(knn_sim_matrix_id, 'knn_sim_matrix.pkl')
+download_from_gdrive(svd_sim_matrix_id, 'svd_sim_matrix.pkl')
 
 # Load model dan data
 with open("svd_model.pkl", "rb") as f:
