@@ -15,11 +15,11 @@ def download_from_gdrive(file_id, output):
         gdown.download(url, output, quiet=False)
 
 # --- FILE ID DARI GOOGLE DRIVE ---
-id_mappings = '1TZi8XmSfMY8LsTzwl84CKxk7FaC5UqHj'
-svd_model_id = '17QcjpBCMjMiqkTPXI_yzVkRry6GgSfxn'
-knn_model_id = '1OI6Umiz9n7INA38a1p4-TwbqwF6TYqny'
-knn_sim_matrix_id = '1dSU0zz8874Kqzaq09WmjqmCTmOjVl7O_'
-svd_sim_matrix_id = '1kgS98CKMPo7bmS2Gans2BrxgY7LNoGyH'
+id_mappings = '1eqH1JUM8Thw4F1sYU9qJSdqb5oNNtstm'
+svd_model_id = '1qIs2bJttxOlk6TA4VNP-geeKAH21Y45t'
+knn_model_id = '1l2eRmLZpei09EDDbqMDUlJpdIJp0ukNb'
+knn_sim_matrix_id = '1VJ_cDKBcqyzhjc48oC3zBFebLfBgPSz0'
+svd_sim_matrix_id = '1ZbZRYoqYH1BWBPAjiAK1Jd6dpOR2ni87'
 
 # Unduh jika belum ada
 download_from_gdrive(id_mappings, 'id_mappings.pkl')
