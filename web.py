@@ -54,64 +54,6 @@ movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
 # Sidebar navigasi
 page = st.sidebar.selectbox("Navigasi", ["Halaman Awal", "Rekomendasi Film"])
 
-def render_footer():
-    st.markdown(
-        """
-        <style>
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: calc(100% - var(--sidebar-width, 0px));
-            margin-left: var(--sidebar-width, 0px);
-            background-color: var(--footer-bg, #f1f1f1);
-            color: var(--footer-color, #333);
-            text-align: center;
-            padding: 10px 0;
-            font-size: 0.85rem;
-            z-index: 100;
-            border-top: 1px solid #ccc;
-            transition: all 0.3s ease;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .footer {
-                background-color: #0e1117;
-                color: #aaa;
-                border-top: 1px solid #333;
-            }
-
-            .footer a {
-                color: #aaa;
-            }
-        }
-
-        @media (prefers-color-scheme: light) {
-            .footer {
-                background-color: #f1f1f1;
-                color: #333;
-                border-top: 1px solid #ccc;
-            }
-
-            .footer a {
-                color: #333;
-            }
-        }
-
-        /* Tambahan padding agar konten tidak ketutupan */
-        .main > div {
-            padding-bottom: 60px;
-        }
-        </style>
-
-        <div class="footer">
-            © 2025 <strong>Rafi Harlianto</strong>. All rights reserved.
-            | Built with ❤️ using <a href="https://streamlit.io" target="_blank">Streamlit</a>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
 
 # 🏠 Halaman Awal
 if page == "Halaman Awal":
@@ -123,7 +65,6 @@ if page == "Halaman Awal":
     ⚖️ Dapat menyesuaikan Top-N jumlah rekomendasi.  
     🎥 Ditampilkan dengan poster film.
     """)
-    render_footer()
 
 # 🎯 Halaman Rekomendasi
 elif page == "Rekomendasi Film":
@@ -135,7 +76,6 @@ elif page == "Rekomendasi Film":
 
     alpha = 0.8
     top_n = st.number_input("Top-N rekomendasi", min_value=1, max_value=20, value=5, step=1)
-    render_footer()
 
     try:
         inner_i = raw_id_to_inner_id[selected_movie_id]
@@ -170,3 +110,16 @@ elif page == "Rekomendasi Film":
     except Exception as e:
         st.error(f"Terjadi kesalahan saat mencari rekomendasi: {e}")
 
+def render_footer():
+    st.markdown("---")
+    st.markdown(
+        """
+        <div style='text-align: center; font-size: 0.9rem; color: gray;'>
+            © 2025 <strong>Rafi Harlianto</strong>. All rights reserved.  
+            Built with ❤️ using <a href="https://streamlit.io" target="_blank">Streamlit</a>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+render_footer()
