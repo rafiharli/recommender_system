@@ -8,6 +8,21 @@ import gdown
 # Konfigurasi halaman
 st.set_page_config(page_title="Movie Recommender System", layout="wide")
 
+# Tambahan CSS untuk styling
+st.markdown("""
+<style>
+.stImage > img {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+hr {
+    border: none;
+    height: 1px;
+    background-color: #eee;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # --- FUNGSI UNDUH GOOGLE DRIVE ---
 def download_from_gdrive(file_id, output):
     if not os.path.exists(output):
@@ -46,11 +61,8 @@ images_df = pd.read_csv("ml1m_images.csv")
 
 # Gabungkan data judul dan gambar
 movies_df = pd.merge(movies_df, images_df, on='movieId', how='left')
-
-# 🔒 Filter hanya film yang tersedia dalam pelatihan
 available_movie_ids = set(raw_id_to_inner_id.keys())
 movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
-
 
 # Sidebar navigasi
 page = st.sidebar.selectbox("Navigasi", ["Halaman Awal", "Rekomendasi Film"])
@@ -61,9 +73,9 @@ if page == "Halaman Awal":
     st.markdown("""
     Selamat datang di sistem rekomendasi film berbasis **Weighted Hybrid (SVD + KNN)**!
 
-    🔍 **Rekomendasi Film** dengan **Prediksi Film** yang sesuai dengan **Preferensi Pengguna**.  
-    ⚖️ Dapat menyesuaikan Top-N jumlah rekomendasi.  
-    🎥 Ditampilkan dengan poster film.
+    🔍 Rekomendasi film berdasarkan **kemiripan konten** dan **preferensi pengguna**.  
+    ⚖️ Gunakan slider α untuk mengatur kontribusi model.  
+    🎥 Ditampilkan dengan poster dan prediksi skor.
     """)
 
 # 🎯 Halaman Rekomendasi
@@ -74,49 +86,49 @@ elif page == "Rekomendasi Film":
     selected_movie = movies_df[movies_df['title'] == selected_title].iloc[0]
     selected_movie_id = int(selected_movie['movieId'])
 
-    alpha = 0.8
+    alpha = st.slider("Nilai α (kontribusi SVD vs KNN)", 0.0, 1.0, 0.8, step=0.05)
     top_n = st.number_input("Top-N rekomendasi", min_value=1, max_value=20, value=5, step=1)
 
     try:
-        inner_i = raw_id_to_inner_id[selected_movie_id]
-        sim_scores = []
+        with st.spinner("🔎 Mencari film yang mirip..."):
+            inner_i = raw_id_to_inner_id[selected_movie_id]
+            sim_scores = []
 
-        for j in range(svd_sim_matrix.shape[0]):
-            if j == inner_i:
-                continue
-            sim_svd = svd_sim_matrix[inner_i][j]
-            sim_knn = knn_sim_matrix[inner_i][j]
-            sim = alpha * sim_svd + (1 - alpha) * sim_knn
-            sim_scores.append((j, sim))
+            for j in range(svd_sim_matrix.shape[0]):
+                if j == inner_i:
+                    continue
+                sim_svd = svd_sim_matrix[inner_i][j]
+                sim_knn = knn_sim_matrix[inner_i][j]
+                sim = alpha * sim_svd + (1 - alpha) * sim_knn
+                sim_scores.append((j, sim))
 
-        sim_scores.sort(key=lambda x: x[1], reverse=True)
-        top_items = sim_scores[:top_n]
+            sim_scores.sort(key=lambda x: x[1], reverse=True)
+            top_items = sim_scores[:top_n]
 
-        st.subheader(f"Top {top_n} rekomendasi mirip dengan '{selected_title}'")
-        cols = st.columns(min(5, top_n))
+            st.subheader(f"Top {top_n} film mirip dengan: *{selected_title}*")
+            cols = st.columns(min(5, top_n))
 
-        for idx, (inner, score) in enumerate(top_items):
-            raw_id = int(inner_id_to_raw_id[inner])
-            movie = movies_df[movies_df['movieId'] == raw_id].iloc[0]
-            title = movie['title']
-            img_url = movie['img_link'] if pd.notna(movie['img_link']) else "https://via.placeholder.com/150"
+            for idx, (inner, score) in enumerate(top_items):
+                raw_id = int(inner_id_to_raw_id[inner])
+                movie = movies_df[movies_df['movieId'] == raw_id].iloc[0]
+                title = movie['title']
+                img_url = movie['img_link'] if pd.notna(movie['img_link']) else "https://via.placeholder.com/150?text=No+Image"
+                pred_rating = score * 4 + 1
+                rating_str = f"⭐ {pred_rating:.2f}/5"
 
-            pred_rating = score * 4 + 1
-            rating_str = f"{pred_rating:.3f}".replace(".", ",")
-
-            with cols[idx % len(cols)]:
-                st.image(img_url, caption=f"{title}\n\nPrediksi Rating: {rating_str}", use_container_width=True)
+                with cols[idx % len(cols)]:
+                    st.image(img_url, caption=f"{title}\n\n{rating_str}", use_container_width=True)
 
     except Exception as e:
-        st.error(f"Terjadi kesalahan saat mencari rekomendasi: {e}")
+        st.error(f"❌ Terjadi kesalahan saat mencari rekomendasi: {e}")
 
+# Footer
 def render_footer():
-    st.markdown("---")
+    st.markdown("""<hr>""", unsafe_allow_html=True)
     st.markdown(
         """
-        <div style='text-align: center; font-size: 0.9rem; color: gray;'>
-            © 2025 <strong>Rafi Harlianto</strong>. All rights reserved.  
-            Built with ❤️ using <a href="https://streamlit.io" target="_blank">Streamlit</a>
+        <div style='text-align: center; font-size: 0.85rem; color: gray; margin-top: 20px;'>
+            © 2025 <strong>Rafi Harlianto</strong> • Dibuat dengan ❤️ menggunakan <a href='https://streamlit.io' target='_blank'>Streamlit</a>
         </div>
         """,
         unsafe_allow_html=True
