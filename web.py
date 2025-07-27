@@ -72,6 +72,7 @@ if st.sidebar.button("🏠 Halaman Awal"):
     st.session_state.page = "Halaman Awal"
 if st.sidebar.button("🎯 Rekomendasi Film"):
     st.session_state.page = "Rekomendasi Film"
+    alpha = st.sidebar.slider("Nilai α (kontribusi SVD vs KNN)", 0, 1, 0.9, step=0.1)
 
 page = st.session_state.page
 
@@ -90,7 +91,7 @@ if page == "Halaman Awal":
 # 🎯 Halaman Rekomendasi
 elif page == "Rekomendasi Film":
     st.title("🎯 Cari Rekomendasi Film")
-    alpha = st.sidebar.slider("Nilai α (kontribusi SVD vs KNN)", 0, 1, 0.9, step=0.1)
+    
     selected_title = st.selectbox("Ketik atau pilih judul film:", movies_df['title'].sort_values().unique())
     selected_movie = movies_df[movies_df['title'] == selected_title].iloc[0]
     selected_movie_id = int(selected_movie['movieId'])
