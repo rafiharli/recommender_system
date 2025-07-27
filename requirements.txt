@@ -1,6 +1,6 @@
 gdown
-streamlit
-pandas
-numpy
-scikit-learn
-scikit-surprise
+streamlit==1.45.0
+pandas==2.2.3
+numpy==1.26.4
+scikit-learn==1.5.2
+scikit-surprise==1.1.4
