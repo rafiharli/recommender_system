@@ -54,9 +54,11 @@ if 'page' not in st.session_state:
 
 st.sidebar.title("Navigasi")
 if st.sidebar.button("🏠 Halaman Awal"):
+    st.progress()
     st.session_state.page = "Halaman Awal"
 if st.sidebar.button("🎯 Rekomendasi Film"):
-    st.snow()
+    st.progress()
+    st.balloons()
     st.session_state.page = "Rekomendasi Film"
 
 page = st.session_state.page
