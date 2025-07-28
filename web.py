@@ -94,17 +94,10 @@ if page == "Halaman Awal":
 # ------------------ HALAMAN REKOMENDASI ------------------
 elif page == "Rekomendasi Film":
     st.title("🎯 Cari Rekomendasi Film")
-    alpha = 0.9
-
-    try:
-        default_index = movies_df[movies_df['title'] == "Toy Story (1995)"].index[0]
-    except:
-        default_index = 0
-
+    alpha = 0.8
     selected_title = st.selectbox("Ketik atau pilih judul film:", movies_df['title'], index=default_index)
     selected_movie = movies_df[movies_df['title'] == selected_title].iloc[0]
     selected_movie_id = int(selected_movie['movieId'])
-
     top_n = st.number_input("Top-N rekomendasi", min_value=1, max_value=20, value=10, step=1)
 
     try:
