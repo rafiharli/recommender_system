@@ -40,4 +40,4 @@ Clone dengan CMD atau PowerShell dengan perintah:
 ### Instalasi Dependency
 
 Untuk menginstall dependency sesuai dengan persyaratan sistem gunakan "pip install"
--contoh: **pip install streamlit**
+- contoh: **pip install streamlit**
