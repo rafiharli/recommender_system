@@ -26,3 +26,19 @@ Clone dengan CMD atau PowerShell dengan perintah:
 
 **git clone https://github.com/rafiharli/recommender_system.git**
 
+## 🛠️ Instalasi
+
+### Persyaratan
+
+gdown
+streamlit==1.45.0
+pandas==2.2.3
+numpy==1.26.4
+scikit-learn==1.5.2
+scikit-surprise==1.1.4
+
+### Instalasi Dependency
+
+Untuk menginstall dependency sesuai dengan persyaratan sistem gunakan "pip install"
+
+contoh: **pip install streamlit**
