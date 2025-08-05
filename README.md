@@ -18,7 +18,7 @@ Sistem ini menggunakan dua versi dari dataset MovieLens:
 - [MovieLens 100K](https://grouplens.org/datasets/movielens/100k/)
 - [MovieLens 1M](https://grouplens.org/datasets/movielens/1m/)
 
-Untuk pengembangan silahkan download zip file ini atau dengan clone menggunakan CMD atau powershell:
+Untuk percobaan dan pengembangan silahkan download zip file ini atau dengan clone menggunakan CMD atau powershell:
 
 Download .ZIP:
 - **https://github.com/rafiharli/recommender_system/archive/refs/heads/main.zip**
