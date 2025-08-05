@@ -2,10 +2,12 @@
 
 Sistem rekomendasi film berbasis machine learning menggunakan dataset **MovieLens 100K** dan **MovieLens 1M**. Sistem ini dikembangkan menggunakan model:
 
-- **SVD (Singular Value Decomposition)**
-- **KNN (K-Nearest Neighbors)(Item-Based dengan Cosine Similarity)**
+- ***SVD (Singular Value Decomposition)***
+- ***KNN (K-Nearest Neighbors)***
 
-Model dibangun dengan bantuan pustaka [Surprise](http://surpriselib.com/), yang dirancang khusus untuk sistem rekomendasi.
+Model dibangun dengan bantuan *library* [Surprise](http://surpriselib.com/), yang dirancang khusus untuk sistem rekomendasi.
+
+Kedua hasil prediksi model digabung menjadi prediksi akhir menggunakan metode penggabungan ***Weighted Hybrid***.
 
 ---
 
