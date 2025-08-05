@@ -19,10 +19,10 @@ Sistem ini menggunakan dua versi dari dataset MovieLens:
 Untuk pengembangan silahkan download zip file ini atau dengan clone menggunakan CMD atau powershell:
 
 Download .ZIP:
--**https://github.com/rafiharli/recommender_system/archive/refs/heads/main.zip**
+- **https://github.com/rafiharli/recommender_system/archive/refs/heads/main.zip**
 
 Clone dengan CMD atau PowerShell dengan perintah:
--**git clone https://github.com/rafiharli/recommender_system.git**
+- **git clone https://github.com/rafiharli/recommender_system.git**
 
 ## 🛠️ Instalasi
 
