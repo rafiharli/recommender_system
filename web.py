@@ -94,7 +94,7 @@ if page == "Halaman Awal":
 # ------------------ HALAMAN REKOMENDASI ------------------
 elif page == "Rekomendasi Film":
     st.title("🎯 Cari Rekomendasi Film")
-    alpha = st.sidebar.slider("Bobot α (weighted hybrid)", "KNN", "SVD", 0.9, step=0.1)
+    alpha = st.sidebar.slider("Bobot α (weighted hybrid)", 0.0, 1.0, 0.9, step=0.1)
     selected_title = st.selectbox("Ketik atau pilih judul film:", movies_df['title'], index=0)
     selected_movie = movies_df[movies_df['title'] == selected_title].iloc[0]
     selected_movie_id = int(selected_movie['movieId'])
