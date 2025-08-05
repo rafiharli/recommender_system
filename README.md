@@ -30,7 +30,7 @@ Clone dengan CMD atau PowerShell dengan perintah:
 
 ### Persyaratan
 
-gdown
+- gdown>=5.0.0
 - streamlit>=1.45.0
 - pandas>=2.2.3
 - numpy>=1.26.4
