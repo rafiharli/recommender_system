@@ -43,3 +43,8 @@ Clone dengan CMD atau PowerShell dengan perintah:
 
 Untuk menginstall dependency sesuai dengan persyaratan sistem gunakan "pip install"
 - contoh: **pip install streamlit**
+
+
+```markdown
+![Streamlit Screenshot](screenshots/demo.png)
+
