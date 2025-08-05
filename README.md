@@ -21,6 +21,8 @@ Untuk pengembangan silahkan download zip file ini atau dengan clone menggunakan 
 Download .ZIP:
 - **https://github.com/rafiharli/recommender_system/archive/refs/heads/main.zip**
 
+atau
+
 Clone dengan CMD atau PowerShell dengan perintah:
 - **git clone https://github.com/rafiharli/recommender_system.git**
 
