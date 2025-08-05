@@ -13,9 +13,8 @@ Kedua hasil prediksi model digabung menjadi prediksi akhir menggunakan metode pe
 
 ## 📁 Dataset
 
-Sistem ini menggunakan dua versi dari dataset MovieLens:
+Sistem ini menggunakan dataset MovieLens-1M yang dibuat oleh GroupLens:
 
-- [MovieLens 100K](https://grouplens.org/datasets/movielens/100k/)
 - [MovieLens 1M](https://grouplens.org/datasets/movielens/1m/)
 
 Untuk percobaan dan pengembangan silahkan download zip file ini atau dengan clone menggunakan CMD atau powershell:
