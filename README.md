@@ -19,12 +19,10 @@ Sistem ini menggunakan dua versi dari dataset MovieLens:
 Untuk pengembangan silahkan download zip file ini atau dengan clone menggunakan CMD atau powershell:
 
 Download .ZIP:
-
-**https://github.com/rafiharli/recommender_system/archive/refs/heads/main.zip**
+-**https://github.com/rafiharli/recommender_system/archive/refs/heads/main.zip**
 
 Clone dengan CMD atau PowerShell dengan perintah:
-
-**git clone https://github.com/rafiharli/recommender_system.git**
+-**git clone https://github.com/rafiharli/recommender_system.git**
 
 ## 🛠️ Instalasi
 
@@ -40,5 +38,4 @@ Clone dengan CMD atau PowerShell dengan perintah:
 ### Instalasi Dependency
 
 Untuk menginstall dependency sesuai dengan persyaratan sistem gunakan "pip install"
-
-contoh: **pip install streamlit**
+-contoh: **pip install streamlit**
