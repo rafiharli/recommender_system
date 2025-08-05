@@ -31,11 +31,11 @@ Clone dengan CMD atau PowerShell dengan perintah:
 ### Persyaratan
 
 gdown
-streamlit==1.45.0
-pandas==2.2.3
-numpy==1.26.4
-scikit-learn==1.5.2
-scikit-surprise==1.1.4
+- streamlit>=1.45.0
+- pandas>=2.2.3
+- numpy>=1.26.4
+- scikit-learn>=1.5.2
+- scikit-surprise>=1.1.4
 
 ### Instalasi Dependency
 
