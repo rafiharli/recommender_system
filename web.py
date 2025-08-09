@@ -118,14 +118,58 @@ page = st.session_state.page
 
 # ================== HALAMAN AWAL ==================
 if page == "Halaman Awal":
-    st.title("🎬 Sistem Rekomendasi Film")
-    st.markdown("""
-    Selamat datang di sistem rekomendasi film berbasis **Weighted Hybrid (SVD + KNN)**!
+    st.markdown(
+        """
+        <style>
+        .title {
+            font-size: 38px;
+            font-weight: bold;
+            color: #FF4B4B;
+            text-align: center;
+        }
+        .subtitle {
+            font-size: 20px;
+            text-align: center;
+            color: #555;
+        }
+        .feature-box {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+            margin: 10px 0;
+        }
+        .emoji {
+            font-size: 22px;
+            margin-right: 6px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
-    🔍 **Rekomendasi Film** dengan **Prediksi Film** yang sesuai dengan **Preferensi Pengguna**.  
-    ⚖️ Dapat menyesuaikan Top-N jumlah rekomendasi.  
-    🎥 Ditampilkan dengan poster film.
-    """)
+    st.markdown('<div class="title">🎬 Sistem Rekomendasi Film</div>', unsafe_allow_html=True)
+    st.markdown('<div class="subtitle">Powered by Weighted Hybrid (SVD + KNN)</div>', unsafe_allow_html=True)
+
+    st.write("")
+    col1, col2 = st.columns([1,1])
+    with col1:
+        st.image("https://i.imgur.com/JZx0n0F.png", use_container_width=True)  # ganti dengan poster/gambar pilihan
+
+    with col2:
+        st.markdown(
+            """
+            <div class="feature-box"> <span class="emoji">🔍</span> **Rekomendasi Personal** berdasarkan preferensi unik Anda </div>
+            <div class="feature-box"> <span class="emoji">⚖️</span> **Atur Top-N** sesuai jumlah rekomendasi yang diinginkan </div>
+            <div class="feature-box"> <span class="emoji">🎥</span> **Poster & Detail Film** untuk pengalaman visual yang menarik </div>
+            <div class="feature-box"> <span class="emoji">📊</span> **Akurasi Tinggi** berkat kombinasi SVD & KNN </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    st.write("---")
+    st.markdown("<p style='text-align:center; font-size:18px;'>💡 Gunakan menu di sidebar untuk memulai perjalanan sinemamu!</p>", unsafe_allow_html=True)
+
 
 # ================== HALAMAN REKOMENDASI LAMA ==================
 elif page == "Rekomendasi Film (\u2264 2000)":
