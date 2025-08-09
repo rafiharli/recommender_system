@@ -88,7 +88,7 @@ def load_datasets():
 
 @st.cache_data
 def load_new_datasets():
-    ratings_df_new = pd.read_csv("ratings_2020.csv")
+    ratings_df_new = pd.read_csv("new_ratings.csv")
     movies_df_new = pd.read_csv("new_movies.csv", encoding='latin1')
     return ratings_df_new, movies_df_new
 
