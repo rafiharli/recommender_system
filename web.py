@@ -97,6 +97,11 @@ movies_df = pd.merge(movies_df, images_df, on='movieId', how='left')
 available_movie_ids = set(raw_id_to_inner_id.keys())
 movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
 
+svd_new, knn_new, svd_matrix_new, knn_matrix_new, inner_id_to_raw_id_new, raw_id_to_inner_id_new = load_new_models()
+ratings_df_new, movies_df_new = load_new_datasets()
+available_movie_ids_new = set(raw_id_to_inner_id_new.keys())
+movies_df_new = movies_df_new[movies_df_new['movieId'].isin(available_movie_ids_new)]
+
 # ================== NAVIGASI SIDEBAR ==================
 if 'page' not in st.session_state:
     st.session_state.page = "Halaman Awal"
@@ -168,12 +173,6 @@ elif page == "Rekomendasi Film (Film <= 2000)":
 elif page == "Rekomendasi Film (Film >= 2020)":
     st.title("🆕 Rekomendasi Film (Dataset 2020+)")
     alpha = 0.8
-
-    svd_new, knn_new, svd_matrix_new, knn_matrix_new, inner_id_to_raw_id_new, raw_id_to_inner_id_new = load_new_models()
-    ratings_df_new, movies_df_new = load_new_datasets()
-
-    available_movie_ids_new = set(raw_id_to_inner_id_new.keys())
-    movies_df_new = movies_df_new[movies_df_new['movieId'].isin(available_movie_ids_new)]
 
     selected_title_new = st.selectbox("Pilih film (dataset baru):", movies_df_new['title'])
     selected_movie_new = movies_df_new[movies_df_new['title'] == selected_title_new].iloc[0]
