@@ -108,10 +108,9 @@ st.sidebar.title("Navigasi")
 if st.sidebar.button("🏠 Halaman Awal"):
     st.session_state.page = "Halaman Awal"
 if st.sidebar.button("🎯 Rekomendasi Film"):
-    st.balloons()
-    st.session_state.page = "Rekomendasi Film"
+    st.session_state.page = "Rekomendasi Film (Film <= 2000)"
 if st.sidebar.button("🆕 Rekomendasi Film (Dataset Baru)"):
-    st.session_state.page = "Rekomendasi Film (Dataset Baru)"
+    st.session_state.page = "Rekomendasi Film (Film >= 2020)"
 
 page = st.session_state.page
 
