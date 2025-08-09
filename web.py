@@ -109,10 +109,10 @@ if 'page' not in st.session_state:
 st.sidebar.title("Navigasi")
 if st.sidebar.button("🏠 Halaman Awal"):
     st.session_state.page = "Halaman Awal"
-if st.sidebar.button("🎯 Rekomendasi Film (U+2264 2000)"):
-    st.session_state.page = "Rekomendasi Film (U+2264 2000)"
-if st.sidebar.button("🆕 Rekomendasi Film (U+2265 2020)"):
-    st.session_state.page = "Rekomendasi Film (U+2265 2020)"
+if st.sidebar.button("🎯 Rekomendasi Film (\u2264 2000)"):
+    st.session_state.page = "Rekomendasi Film (\u2264 2000)"
+if st.sidebar.button("🆕 Rekomendasi Film (\u2265 2020)"):
+    st.session_state.page = "Rekomendasi Film (\u2265 2020)"
 
 page = st.session_state.page
 
@@ -128,9 +128,9 @@ if page == "Halaman Awal":
     """)
 
 # ================== HALAMAN REKOMENDASI LAMA ==================
-elif page == "Rekomendasi Film (U+2264 2000)":
-    st.title("🎯 Cari Rekomendasi Film")
-    alpha = st.slider("Bobot Weighted Hybrid", 0.0, 0.1, 0.9, 0.1)
+elif page == "Rekomendasi Film (\u2264 2000)":
+    st.title("🎯 Rekomendasi Film (\u2264 2000)")
+    alpha = st.slider("Bobot Weighted Hybrid", 0.0, 0.1, 1.0, 0.1)
     selected_title = st.selectbox("Ketik atau pilih judul film:", movies_df['title'])
     selected_movie = movies_df[movies_df['title'] == selected_title].iloc[0]
     selected_movie_id = int(selected_movie['movieId'])
@@ -170,11 +170,11 @@ elif page == "Rekomendasi Film (U+2264 2000)":
         st.error(f"❌ Terjadi kesalahan saat mencari rekomendasi: {e}")
 
 # ================== HALAMAN REKOMENDASI BARU ==================
-elif page == "Rekomendasi Film (U+2265 2020)":
-    st.title("🆕 Rekomendasi Film (U+2265 2020)")
-    alpha = st.slider("Bobot Weighted Hybrid", 0.0, 0.1, 0.9, 0.1)
+elif page == "Rekomendasi Film (\u2265 2020)":
+    st.title("🆕 Rekomendasi Film (\u2265 2020)")
+    alpha = st.slider("Bobot Weighted Hybrid", 0.0, 0.1, 1.0, 0.1)
 
-    selected_title_new = st.selectbox("Pilih film (dataset baru):", movies_df_new['title'])
+    selected_title_new = st.selectbox("Pilih film:", movies_df_new['title'])
     selected_movie_new = movies_df_new[movies_df_new['title'] == selected_title_new].iloc[0]
     selected_movie_id_new = int(selected_movie_new['movieId'])
     top_n_new = st.number_input("Top-N rekomendasi", min_value=1, max_value=20, value=10, step=1, key="topn_new")
