@@ -76,13 +76,9 @@ def load_new_models():
 # ================== LOAD DATASET CSV ==================
 @st.cache_data
 def load_datasets():
-    ratings_url = 'https://raw.githubusercontent.com/rafiharli/recommender_system/main/ratings.csv'
-    movies_url = 'https://raw.githubusercontent.com/rafiharli/recommender_system/main/movies.csv'
-    images_url = 'https://raw.githubusercontent.com/rafiharli/recommender_system/main/ml1m_images.csv'
-
-    ratings_df = pd.read_csv(ratings_url)
-    movies_df = pd.read_csv(movies_url, encoding='latin1')
-    images_df = pd.read_csv(images_url)
+    ratings_df = pd.read_csv("ratings.csv")
+    movies_df = pd.read_csv("movies.csv", encoding='latin1')
+    ratings_df = pd.read_csv("ml1m_images.csv")
 
     return ratings_df, movies_df, images_df
 
@@ -90,6 +86,7 @@ def load_datasets():
 def load_new_datasets():
     ratings_df_new = pd.read_csv("new_ratings.csv")
     movies_df_new = pd.read_csv("new_movies.csv", encoding='latin1')
+    
     return ratings_df_new, movies_df_new
 
 # ================== LOAD SEMUA ==================
