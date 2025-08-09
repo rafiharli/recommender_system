@@ -78,7 +78,7 @@ def load_new_models():
 def load_datasets():
     ratings_df = pd.read_csv("ratings.csv")
     movies_df = pd.read_csv("movies.csv", encoding='latin1')
-    ratings_df = pd.read_csv("ml1m_images.csv")
+    images_df = pd.read_csv("ml1m_images.csv")
 
     return ratings_df, movies_df, images_df
 
