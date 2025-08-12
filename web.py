@@ -5,23 +5,23 @@ import pickle
 import gdown
 import os
 
-st.set_page_config(page_title="Movie Recommender System", layout="wide")
+st.set_page_config(page_title="Sistem Rekomendasi Film", layout="wide")
 
 # ================== KONFIGURASI ID GDRIVE ==================
 FILE_IDS = {
     "id_mappings": "1eqH1JUM8Thw4F1sYU9qJSdqb5oNNtstm",
-    "svd_model": "1qIs2bJttxOlk6TA4VNP-geeKAH21Y45t",
-    "knn_model": "1l2eRmLZpei09EDDbqMDUlJpdIJp0ukNb",
     "knn_matrix": "1VJ_cDKBcqyzhjc48oC3zBFebLfBgPSz0",
-    "svd_matrix": "1ZbZRYoqYH1BWBPAjiAK1Jd6dpOR2ni87"
+    "svd_matrix": "1ZbZRYoqYH1BWBPAjiAK1Jd6dpOR2ni87",
+    "svd_model": "1qIs2bJttxOlk6TA4VNP-geeKAH21Y45t",
+    "knn_model": "1l2eRmLZpei09EDDbqMDUlJpdIJp0ukNb"
 }
 
 NEW_FILE_IDS = {
-    "new_id_mappings": "1P1ixF4R__DeEDIy9EZilDM8BvD9ml4i5",
+    "new_id_mappings": "1-HBfSswHc3OaZ3AnaKDg6wMMEaYCux9B",
+    "new_knn_matrix": "1fW43Hc1ZWIB3whsfS2-qe2NQH3fdrXsC",
+    "new_svd_matrix": "1ilE-Yyq7QrHCZb4vKdaHk8lpREzsYfqO",
     "new_svd_model": "1jzEDNrvhQ52cAXm5DMIVdqdHmRy9kU-_",
-    "new_knn_model": "1rEMLaVOTwY-dqVgOSV8az5_7u26fDxUA",
-    "new_knn_matrix": "1Tjhvxb5kzXLXbnAQ_rowhk4vuff1lxok",
-    "new_svd_matrix": "19YoWS6aNUk0NC0cPwLvX1iGDZ9YM77Nd"
+    "new_knn_model": "1rEMLaVOTwY-dqVgOSV8az5_7u26fDxUA"
 }
 
 # ================== DOWNLOAD FILE JIKA BELUM ADA ==================
@@ -34,15 +34,9 @@ def download_from_gdrive(file_id, output):
 @st.cache_resource
 def load_models():
     download_from_gdrive(FILE_IDS["id_mappings"], "id_mappings.pkl")
-    download_from_gdrive(FILE_IDS["svd_model"], "svd_model.pkl")
-    download_from_gdrive(FILE_IDS["knn_model"], "knn_model.pkl")
     download_from_gdrive(FILE_IDS["knn_matrix"], "knn_matrix.pkl")
     download_from_gdrive(FILE_IDS["svd_matrix"], "svd_matrix.pkl")
 
-    with open("svd_model.pkl", "rb") as f:
-        svd = pickle.load(f)
-    with open("knn_model.pkl", "rb") as f:
-        knn = pickle.load(f)
     with open("svd_matrix.pkl", "rb") as f:
         svd_matrix = pickle.load(f)
     with open("knn_matrix.pkl", "rb") as f:
@@ -50,20 +44,14 @@ def load_models():
     with open("id_mappings.pkl", "rb") as f:
         inner_id_to_raw_id, raw_id_to_inner_id = pickle.load(f)
 
-    return svd, knn, svd_matrix, knn_matrix, inner_id_to_raw_id, raw_id_to_inner_id
+    return svd_matrix, knn_matrix, inner_id_to_raw_id, raw_id_to_inner_id
 
 @st.cache_resource
 def load_new_models():
     download_from_gdrive(NEW_FILE_IDS["new_id_mappings"], "new_id_mappings.pkl")
-    download_from_gdrive(NEW_FILE_IDS["new_svd_model"], "new_svd_model.pkl")
-    download_from_gdrive(NEW_FILE_IDS["new_knn_model"], "new_knn_model.pkl")
     download_from_gdrive(NEW_FILE_IDS["new_knn_matrix"], "new_knn_matrix.pkl")
     download_from_gdrive(NEW_FILE_IDS["new_svd_matrix"], "new_svd_matrix.pkl")
 
-    with open("new_svd_model.pkl", "rb") as f:
-        svd_new = pickle.load(f)
-    with open("new_knn_model.pkl", "rb") as f:
-        knn_new = pickle.load(f)
     with open("new_svd_matrix.pkl", "rb") as f:
         svd_matrix_new = pickle.load(f)
     with open("new_knn_matrix.pkl", "rb") as f:
@@ -71,34 +59,38 @@ def load_new_models():
     with open("new_id_mappings.pkl", "rb") as f:
         inner_id_to_raw_id_new, raw_id_to_inner_id_new = pickle.load(f)
 
-    return svd_new, knn_new, svd_matrix_new, knn_matrix_new, inner_id_to_raw_id_new, raw_id_to_inner_id_new
+    return svd_matrix_new, knn_matrix_new, inner_id_to_raw_id_new, raw_id_to_inner_id_new
 
 # ================== LOAD DATASET CSV ==================
 @st.cache_data
 def load_datasets():
-    ratings_url = 'https://raw.githubusercontent.com/rafiharli/recommender_system/main/ratings.csv'
-    movies_url = 'https://raw.githubusercontent.com/rafiharli/recommender_system/main/movies.csv'
-    images_url = 'https://raw.githubusercontent.com/rafiharli/recommender_system/main/ml1m_images.csv'
-
-    ratings_df = pd.read_csv(ratings_url)
-    movies_df = pd.read_csv(movies_url, encoding='latin1')
-    images_df = pd.read_csv(images_url)
+    ratings_df = pd.read_csv("ratings.csv")
+    movies_df = pd.read_csv("movies.csv", encoding='latin1')
+    images_df = pd.read_csv("ml1m_images.csv")
 
     return ratings_df, movies_df, images_df
 
 @st.cache_data
 def load_new_datasets():
-    ratings_df_new = pd.read_csv("ratings_2020.csv")
+    ratings_df_new = pd.read_csv("new_ratings.csv")
     movies_df_new = pd.read_csv("new_movies.csv", encoding='latin1')
+    
     return ratings_df_new, movies_df_new
 
+
 # ================== LOAD SEMUA ==================
-svd, knn, svd_matrix, knn_matrix, inner_id_to_raw_id, raw_id_to_inner_id = load_models()
+svd_matrix, knn_matrix, inner_id_to_raw_id, raw_id_to_inner_id = load_models()
 ratings_df, movies_df, images_df = load_datasets()
 
 movies_df = pd.merge(movies_df, images_df, on='movieId', how='left')
 available_movie_ids = set(raw_id_to_inner_id.keys())
 movies_df = movies_df[movies_df['movieId'].isin(available_movie_ids)]
+
+svd_matrix_new, knn_matrix_new, inner_id_to_raw_id_new, raw_id_to_inner_id_new = load_new_models()
+ratings_df_new, movies_df_new = load_new_datasets()
+
+available_movie_ids_new = set(raw_id_to_inner_id_new.keys())
+movies_df_new = movies_df_new[movies_df_new['movieId'].isin(available_movie_ids_new)]
 
 # ================== NAVIGASI SIDEBAR ==================
 if 'page' not in st.session_state:
@@ -107,10 +99,10 @@ if 'page' not in st.session_state:
 st.sidebar.title("Navigasi")
 if st.sidebar.button("🏠 Halaman Awal"):
     st.session_state.page = "Halaman Awal"
-if st.sidebar.button("🎯 Rekomendasi Film"):
-    st.session_state.page = "Rekomendasi Film (Film <= 2000)"
-if st.sidebar.button("🆕 Rekomendasi Film (Dataset Baru)"):
-    st.session_state.page = "Rekomendasi Film (Film >= 2020)"
+if st.sidebar.button("🎯 Rekomendasi Film (\u2264 2000)"):
+    st.session_state.page = "Rekomendasi Film (\u2264 2000)"
+if st.sidebar.button("🆕 Rekomendasi Film (\u2265 2017)"):
+    st.session_state.page = "Rekomendasi Film (\u2265 2017)"
 
 page = st.session_state.page
 
@@ -122,13 +114,21 @@ if page == "Halaman Awal":
 
     🔍 **Rekomendasi Film** dengan **Prediksi Film** yang sesuai dengan **Preferensi Pengguna**.  
     ⚖️ Dapat menyesuaikan Top-N jumlah rekomendasi.  
-    🎥 Ditampilkan dengan poster film.
+    🎥 Ditampilkan dengan poster film.    
+        
     """)
-
+    
 # ================== HALAMAN REKOMENDASI LAMA ==================
-elif page == "Rekomendasi Film (Film <= 2000)":
-    st.title("🎯 Cari Rekomendasi Film")
-    alpha = 0.8
+elif page == "Rekomendasi Film (\u2264 2000)":
+    st.title("🎯 Rekomendasi Film (1919 - 2000)")
+    st.markdown("""
+    Selamat datang di sistem rekomendasi film berbasis ***Weighted Hybrid* (SVD + KNN)**!
+
+    🔍 Rekomendasi berdasarkan **1.000.209** rating oleh **6040** pengguna.  
+    🎥 Jumlah film sebanyak **3952** dari **Tahun 1919 - 2000**.  
+    ⚖️ Sumber: **MovieLens-1M** (*GroupLens Research Lab*).
+    """)
+    alpha = st.slider("Bobot Weighted Hybrid", 0.0, 1.0, 0.9, 0.1)
     selected_title = st.selectbox("Ketik atau pilih judul film:", movies_df['title'])
     selected_movie = movies_df[movies_df['title'] == selected_title].iloc[0]
     selected_movie_id = int(selected_movie['movieId'])
@@ -168,17 +168,17 @@ elif page == "Rekomendasi Film (Film <= 2000)":
         st.error(f"❌ Terjadi kesalahan saat mencari rekomendasi: {e}")
 
 # ================== HALAMAN REKOMENDASI BARU ==================
-elif page == "Rekomendasi Film (Film >= 2020)":
-    st.title("🆕 Rekomendasi Film (Dataset 2020+)")
-    alpha = 0.8
+elif page == "Rekomendasi Film (\u2265 2017)":
+    st.title("🆕 Rekomendasi Film (2017 - 2023)")
+    st.markdown("""
+    Selamat datang di sistem rekomendasi film berbasis ***Weighted Hybrid* (SVD + KNN)**!
 
-    svd_new, knn_new, svd_matrix_new, knn_matrix_new, inner_id_to_raw_id_new, raw_id_to_inner_id_new = load_new_models()
-    ratings_df_new, movies_df_new = load_new_datasets()
-
-    available_movie_ids_new = set(raw_id_to_inner_id_new.keys())
-    movies_df_new = movies_df_new[movies_df_new['movieId'].isin(available_movie_ids_new)]
-
-    selected_title_new = st.selectbox("Pilih film (dataset baru):", movies_df_new['title'])
+    🔍 Rekomendasi berdasarkan **1.129.571** rating.  
+    🎥 Jumlah film sebanyak **17.519** dari **Tahun 2017 - 2003**.  
+    ⚖️ Sumber: **MovieLens-32M** (*GroupLens Research Lab*).
+    """)
+    alpha = st.slider("Bobot Weighted Hybrid", 0.0, 1.0, 0.9, 0.1)
+    selected_title_new = st.selectbox("Pilih film:", movies_df_new['title'])
     selected_movie_new = movies_df_new[movies_df_new['title'] == selected_title_new].iloc[0]
     selected_movie_id_new = int(selected_movie_new['movieId'])
     top_n_new = st.number_input("Top-N rekomendasi", min_value=1, max_value=20, value=10, step=1, key="topn_new")
