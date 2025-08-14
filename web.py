@@ -191,8 +191,8 @@ elif page == "Rekomendasi Film (\u2265 2017)":
             for j in range(svd_matrix_new.shape[0]):
                 if j == inner_i_new:
                     continue
-                pred_svd_new = svd_matrix_new[inner_i_new][j]
-                pred_knn_new = knn_matrix_new[inner_i_new][j]
+                pred_svd_new = svd_matrix[inner_i_new][j]
+                pred_knn_new = knn_matrix[inner_i_new][j]
                 pred_weighted_new = alpha * pred_svd_new + (1 - alpha) * pred_knn_new
                 pred_scores_new.append((j, pred_weighted_new))
 
